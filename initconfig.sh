@@ -505,5 +505,5 @@ masquerade:
   type: 404
 EOF
     echo -e "${green}xnxx 配置文件生成完成,正在重新启动服务${plain}"
-    v2bx restart
+    xnxx restart
 }
