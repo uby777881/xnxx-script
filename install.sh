@@ -246,7 +246,7 @@ EOF
     if [[ ! -f /etc/xnxx/custom_inbound.json ]]; then
         cp custom_inbound.json /etc/xnxx/
     fi
-    curl -o /usr/bin/xnxx -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/master/xnxx.sh
+    curl -o /usr/bin/xnxx -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/main/xnxx.sh
     chmod +x /usr/bin/xnxx
     if [ ! -L /usr/bin/xnxx ]; then
         ln -s /usr/bin/xnxx /usr/bin/xnxx
@@ -278,7 +278,7 @@ EOF
     if [[ $first_install == true ]]; then
         read -rp "检测到你为第一次安装xnxx,是否自动直接生成配置文件？(y/n): " if_generate
         if [[ $if_generate == [Yy] ]]; then
-            curl -o ./initconfig.sh -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/master/initconfig.sh
+            curl -o ./initconfig.sh -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/main/initconfig.sh
             source initconfig.sh
             rm initconfig.sh -f
             generate_config_file
