@@ -288,4 +288,4 @@ EOF
 
 echo -e "${green}开始安装${plain}"
 install_base
-install_V2bX $1
+install_xnxx $1
