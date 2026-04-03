@@ -132,20 +132,20 @@ install_xnxx() {
     cd /usr/local/xnxx/
 
     if  [ $# == 0 ] ;then
-        last_version=$(curl -Ls "https://api.github.com/repos//uby777881/xnxx-installer/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        last_version=$(curl -Ls "https://api.github.com/repos/wyx2685/V2bX/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
             echo -e "${red}检测 xnxx 版本失败，可能是超出 Github API 限制，请稍后再试，或手动指定 xnxx 版本安装${plain}"
             exit 1
         fi
         echo -e "检测到 xnxx 最新版本：${last_version}，开始安装"
-        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx-linux.zip https://github.com//uby777881/xnxx-installer/releases/download/${last_version}/xnxx-linux-${arch}.zip
+        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx-linux.zip https://github.com/wyx2685/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 xnxx 失败，请确保你的服务器能够下载 Github 的文件${plain}"
             exit 1
         fi
     else
         last_version=$1
-        url="https://github.com//uby777881/xnxx-installer/releases/download/${last_version}/xnxx-linux-${arch}.zip"
+        url="https://github.com/wyx2685/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip"
         echo -e "开始安装 xnxx $1"
         wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx-linux.zip ${url}
         if [[ $? -ne 0 ]]; then
@@ -229,7 +229,7 @@ EOF
         if [[ $? == 0 ]]; then
             echo -e "${green}xnxx 重启成功${plain}"
         else
-            echo -e "${red}xnxx 可能启动失败，请稍后使用 xnxx log 查看日志信息，若无法启动，则可能更改了配置格式，请前往 wiki 查看：https://github.com/V2bX-project/V2bX/wiki${plain}"
+            echo -e "${red}xnxx 可能启动失败，请稍后使用 xnxx log 查看日志信息，若无法启动，则可能更改了配置格式，请前往 wiki 查看：https://github.com/xnxx-project/V2bX/wiki${plain}"
         fi
         first_install=false
     fi
@@ -246,7 +246,7 @@ EOF
     if [[ ! -f /etc/xnxx/custom_inbound.json ]]; then
         cp custom_inbound.json /etc/xnxx/
     fi
-    curl -o /usr/bin/xnxx -Ls https://raw.githubusercontent.com//uby777881/xnxx-script/master/xnxx.sh
+    curl -o /usr/bin/xnxx -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/master/xnxx.sh
     chmod +x /usr/bin/xnxx
     if [ ! -L /usr/bin/xnxx ]; then
         ln -s /usr/bin/xnxx /usr/bin/xnxx
@@ -278,7 +278,7 @@ EOF
     if [[ $first_install == true ]]; then
         read -rp "检测到你为第一次安装xnxx,是否自动直接生成配置文件？(y/n): " if_generate
         if [[ $if_generate == [Yy] ]]; then
-            curl -o ./initconfig.sh -Ls https://raw.githubusercontent.com//uby777881/xnxx-script/master/initconfig.sh
+            curl -o ./initconfig.sh -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/master/initconfig.sh
             source initconfig.sh
             rm initconfig.sh -f
             generate_config_file
@@ -288,4 +288,4 @@ EOF
 
 echo -e "${green}开始安装${plain}"
 install_base
-install_xnxx $1
+install_V2bX $1
