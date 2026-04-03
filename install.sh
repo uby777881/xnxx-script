@@ -138,24 +138,24 @@ install_xnxx() {
             exit 1
         fi
         echo -e "检测到 xnxx 最新版本：${last_version}，开始安装"
-        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx.zip https://github.com/uby777881/xnxx-installer/releases/download/${last_version}/xnxx-${arch}.zip
+        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx-linux.zip https://github.com/uby777881/xnxx-installer/releases/download/${last_version}/xnxx-linux-${arch}.zip
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 xnxx 失败，请确保你的服务器能够下载 Github 的文件${plain}"
             exit 1
         fi
     else
         last_version=$1
-        url="https://github.com/uby777881/xnxx-installer/releases/download/${last_version}/xnxx-${arch}.zip"
+        url="https://github.com/uby777881/xnxx-installer/releases/download/${last_version}/xnxx-linux-${arch}.zip"
         echo -e "开始安装 xnxx $1"
-        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx.zip ${url}
+        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx-linux.zip ${url}
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 xnxx $1 失败，请确保此版本存在${plain}"
             exit 1
         fi
     fi
 
-    unzip xnxx.zip
-    rm xnxx.zip -f
+    unzip xnxx-linux.zip
+    rm xnxx-linux.zip -f
     chmod +x xnxx
     mkdir /etc/xnxx/ -p
     cp geoip.dat /etc/xnxx/
@@ -246,7 +246,7 @@ EOF
     if [[ ! -f /etc/xnxx/custom_inbound.json ]]; then
         cp custom_inbound.json /etc/xnxx/
     fi
-    curl -o /usr/bin/xnxx -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/main/xnxx.sh
+    curl -o /usr/bin/xnxx -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/master/xnxx.sh
     chmod +x /usr/bin/xnxx
     if [ ! -L /usr/bin/xnxx ]; then
         ln -s /usr/bin/xnxx /usr/bin/xnxx
@@ -278,7 +278,7 @@ EOF
     if [[ $first_install == true ]]; then
         read -rp "检测到你为第一次安装xnxx,是否自动直接生成配置文件？(y/n): " if_generate
         if [[ $if_generate == [Yy] ]]; then
-            curl -o ./initconfig.sh -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/main/initconfig.sh
+            curl -o ./initconfig.sh -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/master/initconfig.sh
             source initconfig.sh
             rm initconfig.sh -f
             generate_config_file
