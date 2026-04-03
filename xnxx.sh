@@ -96,7 +96,7 @@ before_show_menu() {
 }
 
 install() {
-    bash <(curl -Ls https://raw.githubusercontent.com//uby777881/xnxx-script/master/install.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/main/install.sh)
     if [[ $? == 0 ]]; then
         if [[ $# == 0 ]]; then
             start
@@ -112,7 +112,7 @@ update() {
     else
         version=$2
     fi
-    bash <(curl -Ls https://raw.githubusercontent.com//uby777881/xnxx-script/master/install.sh) $version
+    bash <(curl -Ls https://raw.githubusercontent.com/uby777881/xnxx-script/main/install.sh) $version
     if [[ $? == 0 ]]; then
         echo -e "${green}更新完成，已自动重启 xnxx，请使用 xnxx log 查看运行日志${plain}"
         exit
@@ -169,7 +169,7 @@ uninstall() {
     rm /usr/local/xnxx/ -rf
 
     echo ""
-    echo -e "Uninstallation successful. If you want to delete this script, after exiting the script run ${green}rm /usr/bin/xnxx -f${plain} to remove it"
+    echo -e "卸载成功，如果你想删除此脚本，则退出脚本后运行 ${green}rm /usr/bin/xnxx -f${plain} 进行删除"
     echo ""
 
     if [[ $# == 0 ]]; then
@@ -181,7 +181,7 @@ start() {
     check_status
     if [[ $? == 0 ]]; then
         echo ""
-        echo -e "${green}xnxx is already running, no need to start again. If you need to restart, please choose restart${plain}"
+        echo -e "${green}xnxx已运行，无需再次启动，如需重启请选择重启${plain}"
     else
         if [[ x"${release}" == x"alpine" ]]; then
             service xnxx start
@@ -191,9 +191,9 @@ start() {
         sleep 2
         check_status
         if [[ $? == 0 ]]; then
-            echo -e "${green}xnxx started successfully, please use xnxx log to view running logs${plain}"
+            echo -e "${green}xnxx 启动成功，请使用 xnxx log 查看运行日志${plain}"
         else
-            echo -e "${red}xnxx may have failed to start, please use xnxx log later to check log information${plain}"
+            echo -e "${red}xnxx可能启动失败，请稍后使用 xnxx log 查看日志信息${plain}"
         fi
     fi
 
@@ -211,9 +211,9 @@ stop() {
     sleep 2
     check_status
     if [[ $? == 1 ]]; then
-        echo -e "${green}xnxx stopped successfully${plain}"
+        echo -e "${green}xnxx 停止成功${plain}"
     else
-        echo -e "${red}xnxx failed to stop, possibly because stopping took longer than two seconds. Please check log information later${plain}"
+        echo -e "${red}xnxx停止失败，可能是因为停止时间超过了两秒，请稍后查看日志信息${plain}"
     fi
 
     if [[ $# == 0 ]]; then
@@ -230,9 +230,9 @@ restart() {
     sleep 2
     check_status
     if [[ $? == 0 ]]; then
-        echo -e "${green}xnxx restarted successfully, please use xnxx log to view running logs${plain}"
+        echo -e "${green}xnxx 重启成功，请使用 xnxx log 查看运行日志${plain}"
     else
-        echo -e "${red}xnxx may have failed to start, please check logs later using xnxx log${plain}"
+        echo -e "${red}xnxx可能启动失败，请稍后使用 xnxx log 查看日志信息${plain}"
     fi
     if [[ $# == 0 ]]; then
         before_show_menu
@@ -257,9 +257,9 @@ enable() {
         systemctl enable xnxx
     fi
     if [[ $? == 0 ]]; then
-        echo -e "${green}xnxx set to start on boot successfully${plain}"
+        echo -e "${green}xnxx 设置开机自启成功${plain}"
     else
-        echo -e "${red}Failed to set xnxx to start on boot${plain}"
+        echo -e "${red}xnxx 设置开机自启失败${plain}"
     fi
 
     if [[ $# == 0 ]]; then
@@ -274,9 +274,9 @@ disable() {
         systemctl disable xnxx
     fi
     if [[ $? == 0 ]]; then
-        echo -e "${green}xnxx auto-start on boot canceled successfully${plain}"
+        echo -e "${green}xnxx 取消开机自启成功${plain}"
     else
-        echo -e "${red}Failed to cancel xnxx auto-start on boot${plain}"
+        echo -e "${red}xnxx 取消开机自启失败${plain}"
     fi
 
     if [[ $# == 0 ]]; then
@@ -286,7 +286,7 @@ disable() {
 
 show_log() {
     if [[ x"${release}" == x"alpine" ]]; then
-        echo -e "${red}Log viewing is not supported on Alpine system for now${plain}\n" && exit 1
+        echo -e "${red}alpine系统暂不支持日志查看${plain}\n" && exit 1
     else
         journalctl -u xnxx.service -e --no-pager -f
     fi
@@ -300,14 +300,14 @@ install_bbr() {
 }
 
 update_shell() {
-    wget -O /usr/bin/xnxx -N --no-check-certificate https://raw.githubusercontent.com//uby777881/xnxx-script/master/xnxx.sh
+    wget -O /usr/bin/xnxx -N --no-check-certificate https://raw.githubusercontent.com/uby777881/xnxx-script/main/xnxx.sh
     if [[ $? != 0 ]]; then
         echo ""
-        echo -e "${red}Failed to download script, please check if this machine can connect to Github${plain}"
+        echo -e "${red}下载脚本失败，请检查本机能否连接 Github${plain}"
         before_show_menu
     else
         chmod +x /usr/bin/xnxx
-        echo -e "${green}Script upgraded successfully, please rerun the script${plain}" && exit 0
+        echo -e "${green}升级脚本成功，请重新运行脚本${plain}" && exit 0
     fi
 }
 
@@ -355,7 +355,7 @@ check_uninstall() {
     check_status
     if [[ $? != 2 ]]; then
         echo ""
-        echo -e "${red}xnxx is already installed, please do not install again${plain}"
+        echo -e "${red}xnxx已安装，请不要重复安装${plain}"
         if [[ $# == 0 ]]; then
             before_show_menu
         fi
@@ -369,7 +369,7 @@ check_install() {
     check_status
     if [[ $? == 2 ]]; then
         echo ""
-        echo -e "${red}Please install xnxx first${plain}"
+        echo -e "${red}请先安装xnxx${plain}"
         if [[ $# == 0 ]]; then
             before_show_menu
         fi
@@ -383,29 +383,29 @@ show_status() {
     check_status
     case $? in
         0)
-            echo -e "xnxx status: ${green}running${plain}"
+            echo -e "xnxx状态: ${green}已运行${plain}"
             show_enable_status
             ;;
         1)
-            echo -e "xnxx status: ${yellow}not running${plain}"
+            echo -e "xnxx状态: ${yellow}未运行${plain}"
             show_enable_status
             ;;
         2)
-            echo -e "xnxx status: ${red}not installed${plain}"
+            echo -e "xnxx状态: ${red}未安装${plain}"
     esac
 }
 
 show_enable_status() {
     check_enabled
     if [[ $? == 0 ]]; then
-        echo -e "Auto-start on boot: ${green}Yes${plain}"
+        echo -e "是否开机自启: ${green}是${plain}"
     else
-        echo -e "Auto-start on boot: ${red}No${plain}"
+        echo -e "是否开机自启: ${red}否${plain}"
     fi
 }
 
 generate_x25519_key() {
-    echo -n "Generating x25519 key: "
+    echo -n "正在生成 x25519 密钥："
     /usr/local/xnxx/xnxx x25519
     echo ""
     if [[ $# == 0 ]]; then
@@ -414,7 +414,7 @@ generate_x25519_key() {
 }
 
 show_xnxx_version() {
-    echo -n "xnxx version: "
+    echo -n "xnxx 版本："
     /usr/local/xnxx/xnxx version
     echo ""
     if [[ $# == 0 ]]; then
@@ -423,11 +423,11 @@ show_xnxx_version() {
 }
 
 add_node_config() {
-    echo -e "${green}Please select node core type:${plain}"
+    echo -e "${green}请选择节点核心类型：${plain}"
     echo -e "${green}1. xray${plain}"
     echo -e "${green}2. singbox${plain}"
     echo -e "${green}3. hysteria2${plain}"
-    read -rp "Please enter: " core_type
+    read -rp "请输入：" core_type
     if [ "$core_type" == "1" ]; then
         core="xray"
         core_xray=true
@@ -438,16 +438,16 @@ add_node_config() {
         core="hysteria2"
         core_hysteria2=true
     else
-        echo "Invalid selection. Please choose 1, 2, or 3."
+        echo "无效的选择。请选择 1 2 3。"
         continue
     fi
     while true; do
-        read -rp "Please enter node Node ID: " NodeID
+        read -rp "请输入节点Node ID：" NodeID
         # 判断NodeID是否为正整数
         if [[ "$NodeID" =~ ^[0-9]+$ ]]; then
             break  # 输入正确，退出循环
         else
-            echo "Error: Please enter a valid number as Node ID."
+            echo "错误：请输入正确的数字作为Node ID。"
         fi
     done
 
@@ -492,25 +492,25 @@ add_node_config() {
     fi
 
     if [[ "$isreality" != "y" && "$isreality" != "Y" &&  "$istls" != "y" ]]; then
-        read -rp "Do you want to configure TLS? (y/n) " istls
+        read -rp "请选择是否进行TLS配置？(y/n)" istls
     fi
 
     certmode="none"
     certdomain="example.com"
     if [[ "$isreality" != "y" && "$isreality" != "Y" && ( "$istls" == "y" || "$istls" == "Y" ) ]]; then
-        echo -e "${yellow}Please select certificate request mode:${plain}"
-        echo -e "${green}1. http mode auto request, node domain is correctly resolved${plain}"
-        echo -e "${green}2. dns mode auto request, need to provide correct domain provider API parameters${plain}"
-        echo -e "${green}3. self mode, self-signed certificate or provide existing certificate files${plain}"
-        read -rp "Please enter: " certmode
+        echo -e "${yellow}请选择证书申请模式：${plain}"
+        echo -e "${green}1. http模式自动申请，节点域名已正确解析${plain}"
+        echo -e "${green}2. dns模式自动申请，需填入正确域名服务商API参数${plain}"
+        echo -e "${green}3. self模式，自签证书或提供已有证书文件${plain}"
+        read -rp "请输入：" certmode
         case "$certmode" in
             1 ) certmode="http" ;;
             2 ) certmode="dns" ;;
             3 ) certmode="self" ;;
         esac
-        read -rp "Please enter node certificate domain (example.com): " certdomain
+        read -rp "请输入节点证书域名(example.com)：" certdomain
         if [ "$certmode" != "http" ]; then
-            echo -e "${red}Please manually edit the configuration file and restart xnxx!${plain}"
+            echo -e "${red}请手动修改配置文件后重启xnxx！${plain}"
         fi
     fi
     ipv6_support=$(check_ipv6_support)
@@ -615,14 +615,14 @@ EOF
 }
 
 generate_config_file() {
-    echo -e "${yellow}xnxx Configuration File Generation Wizard${plain}"
-    echo -e "${red}Please read the following notes:${plain}"
-    echo -e "${red}1. This feature is currently in the testing phase${plain}"
-    echo -e "${red}2. The generated configuration file will be saved to /etc/xnxx/config.json${plain}"
-    echo -e "${red}3. The original configuration file will be saved to /etc/xnxx/config.json.bak${plain}"
-    echo -e "${red}4. Currently only partial TLS support${plain}"
-    echo -e "${red}5. Configuration files generated using this feature include auditing. Are you sure you want to continue? (y/n)${plain}"
-    read -rp "Please enter: " continue_prompt
+    echo -e "${yellow}xnxx 配置文件生成向导${plain}"
+    echo -e "${red}请阅读以下注意事项：${plain}"
+    echo -e "${red}1. 目前该功能正处测试阶段${plain}"
+    echo -e "${red}2. 生成的配置文件会保存到 /etc/xnxx/config.json${plain}"
+    echo -e "${red}3. 原来的配置文件会保存到 /etc/xnxx/config.json.bak${plain}"
+    echo -e "${red}4. 目前仅部分支持TLS${plain}"
+    echo -e "${red}5. 使用此功能生成的配置文件会自带审计，确定继续？(y/n)${plain}"
+    read -rp "请输入：" continue_prompt
     if [[ "$continue_prompt" =~ ^[Nn][Oo]? ]]; then
         exit 0
     fi
@@ -939,52 +939,52 @@ open_ports() {
 }
 
 show_usage() {
-    echo "xnxx management script usage: "
+    echo "xnxx 管理脚本使用方法: "
     echo "------------------------------------------"
-    echo "xnxx              - Show management menu (more features)"
-    echo "xnxx start        - Start xnxx"
-    echo "xnxx stop         - Stop xnxx"
-    echo "xnxx restart      - Restart xnxx"
-    echo "xnxx status       - Check xnxx status"
-    echo "xnxx enable       - Set xnxx to start on boot"
-    echo "xnxx disable      - Cancel xnxx auto-start on boot"
-    echo "xnxx log          - View xnxx logs"
-    echo "xnxx x25519       - Generate x25519 key"
-    echo "xnxx generate     - Generate xnxx configuration file"
-    echo "xnxx update       - Update xnxx"
-    echo "xnxx update x.x.x - Install specific xnxx version"
-    echo "xnxx install      - Install xnxx"
-    echo "xnxx uninstall    - Uninstall xnxx"
-    echo "xnxx version      - Check xnxx version"
+    echo "xnxx              - 显示管理菜单 (功能更多)"
+    echo "xnxx start        - 启动 xnxx"
+    echo "xnxx stop         - 停止 xnxx"
+    echo "xnxx restart      - 重启 xnxx"
+    echo "xnxx status       - 查看 xnxx 状态"
+    echo "xnxx enable       - 设置 xnxx 开机自启"
+    echo "xnxx disable      - 取消 xnxx 开机自启"
+    echo "xnxx log          - 查看 xnxx 日志"
+    echo "xnxx x25519       - 生成 x25519 密钥"
+    echo "xnxx generate     - 生成 xnxx 配置文件"
+    echo "xnxx update       - 更新 xnxx"
+    echo "xnxx update x.x.x - 安装 xnxx 指定版本"
+    echo "xnxx install      - 安装 xnxx"
+    echo "xnxx uninstall    - 卸载 xnxx"
+    echo "xnxx version      - 查看 xnxx 版本"
     echo "------------------------------------------"
 }
 
 show_menu() {
     echo -e "
-${green}xnxx backend management script,${plain}${red} not suitable for Docker${plain}
---- https://github.com/wyx2685/xnxx ---
-  ${green}0.${plain} Modify configuration
-  ————————————————
-  ${green}1.${plain} Install xnxx
-  ${green}2.${plain} Update xnxx
-  ${green}3.${plain} Uninstall xnxx
-  ————————————————
-  ${green}4.${plain} Start xnxx
-  ${green}5.${plain} Stop xnxx
-  ${green}6.${plain} Restart xnxx
-  ${green}7.${plain} Check xnxx status
-  ${green}8.${plain} View xnxx logs
-  ————————————————
-  ${green}9.${plain} Set xnxx to start on boot
-  ${green}10.${plain} Cancel xnxx auto-start on boot
-  ————————————————
-  ${green}11.${plain} One-click install BBR (latest kernel)
-  ${green}12.${plain} Check xnxx version
-  ${green}13.${plain} Generate X25519 key
-  ${green}14.${plain} Upgrade xnxx maintenance script
-  ${green}15.${plain} Generate xnxx configuration file
-  ${green}16.${plain} Open all network ports on VPS
-  ${green}17.${plain} Exit script
+  ${green}xnxx 后端管理脚本，${plain}${red}不适用于docker${plain}
+--- https://github.com/uby777881/xnxx ---
+  ${green}0.${plain} 修改配置
+————————————————
+  ${green}1.${plain} 安装 xnxx
+  ${green}2.${plain} 更新 xnxx
+  ${green}3.${plain} 卸载 xnxx
+————————————————
+  ${green}4.${plain} 启动 xnxx
+  ${green}5.${plain} 停止 xnxx
+  ${green}6.${plain} 重启 xnxx
+  ${green}7.${plain} 查看 xnxx 状态
+  ${green}8.${plain} 查看 xnxx 日志
+————————————————
+  ${green}9.${plain} 设置 xnxx 开机自启
+  ${green}10.${plain} 取消 xnxx 开机自启
+————————————————
+  ${green}11.${plain} 一键安装 bbr (最新内核)
+  ${green}12.${plain} 查看 xnxx 版本
+  ${green}13.${plain} 生成 X25519 密钥
+  ${green}14.${plain} 升级 xnxx 维护脚本
+  ${green}15.${plain} 生成 xnxx 配置文件
+  ${green}16.${plain} 放行 VPS 的所有网络端口
+  ${green}17.${plain} 退出脚本
  "
  #后续更新可加入上方字符串中
     show_status
