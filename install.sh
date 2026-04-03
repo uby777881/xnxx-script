@@ -132,30 +132,30 @@ install_xnxx() {
     cd /usr/local/xnxx/
 
     if  [ $# == 0 ] ;then
-        last_version=$(curl -Ls "https://api.github.com/repos/wyx2685/V2bX/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        last_version=$(curl -Ls "https://api.github.com/repos/uby777881/xnxx-installer/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
             echo -e "${red}检测 xnxx 版本失败，可能是超出 Github API 限制，请稍后再试，或手动指定 xnxx 版本安装${plain}"
             exit 1
         fi
         echo -e "检测到 xnxx 最新版本：${last_version}，开始安装"
-        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx-linux.zip https://github.com/wyx2685/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip
+        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx.zip https://github.com/uby777881/xnxx-installer/releases/download/${last_version}/xnxx-${arch}.zip
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 xnxx 失败，请确保你的服务器能够下载 Github 的文件${plain}"
             exit 1
         fi
     else
         last_version=$1
-        url="https://github.com/wyx2685/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip"
+        url="https://github.com/uby777881/xnxx-installer/releases/download/${last_version}/xnxx-${arch}.zip"
         echo -e "开始安装 xnxx $1"
-        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx-linux.zip ${url}
+        wget --no-check-certificate -N --progress=bar -O /usr/local/xnxx/xnxx.zip ${url}
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 xnxx $1 失败，请确保此版本存在${plain}"
             exit 1
         fi
     fi
 
-    unzip xnxx-linux.zip
-    rm xnxx-linux.zip -f
+    unzip xnxx.zip
+    rm xnxx.zip -f
     mv V2bX xnxx 
     chmod +x xnxx
     mkdir /etc/xnxx/ -p
