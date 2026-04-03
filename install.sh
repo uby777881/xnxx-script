@@ -156,7 +156,6 @@ install_xnxx() {
 
     unzip xnxx.zip
     rm xnxx.zip -f
-    mv V2bX xnxx 
     chmod +x xnxx
     mkdir /etc/xnxx/ -p
     cp geoip.dat /etc/xnxx/
